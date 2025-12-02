@@ -640,6 +640,10 @@ def delete_order(order_id):
     return redirect(url_for("admin_orders"))
 
 
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Railway ya cloud deploy ke liye PORT environment variable use hota hai
+    port = int(os.environ.get("PORT", 5000))
+    # 0.0.0.0 host -> cloud / container ke liye zaruri
+    app.run(host="0.0.0.0", port=port, debug=True)
+# if __name__ == "__main__":
+#     app.run(debug=True)
