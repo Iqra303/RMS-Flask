@@ -436,7 +436,7 @@ def login():
 def logout():
     session.clear()
     flash("Logged out successfully!", "success")
-    return redirect(url_for("home"))
+    return redirect(url_for("login"))
 
 # @app.route("/bill")
 # def billing():
