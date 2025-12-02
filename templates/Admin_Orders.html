@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Orders</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    nav {
+      width: 100%;
+      background: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #ddd;
+    }
+    
+    .logo img { height: 80px; }
+    
+    ul { display: flex; list-style: none; gap: 40px; align-items: center; }
+    
+    ul li a {
+      text-decoration: none;
+      color: rgb(255, 255, 255);
+      font-size: 18px;
+      padding: 10px 15px;
+      border-radius: 4px;
+      font-family:'Trebuchet MS', Arial, sans-serif;
+      background-color: rgb(253, 43, 43);
+    }
+    
+    ul li a:hover {
+      background: black;
+      color: white;
+      transition: 0.3s;
+    }
+    
+    .hamburger {
+      display: none;
+      font-size: 35px;
+      cursor: pointer;
+      user-select: none;
+    }
+    
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px; /* lower a bit */
+        left: 0;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        gap: 10px; /* smaller gap */
+        padding: 10px 0; /* less padding */
+        z-index: 999; /* ensure it’s above content */
+      }
+    
+      nav ul li a {
+        display: block;
+        padding: 10px 15px;
+        font-size: 16px; /* smaller font on mobile */
+        border-radius: 0; /* remove rounded edges for compact look */
+      }
+    
+      nav ul.show {
+        display: flex;
+      }
+    
+      .hamburger {
+        display: block;
+      }
+    }
+    
+    body { font-family: Arial, sans-serif; background: #fff3e0; color: #000; height:100vh; }
+    h2 { text-align: center; color: #f96630; margin-top: 30px; }
+    .order-box { margin-bottom: 40px; margin:20px;padding: 20px; border: 2px solid #f96630; border-radius: 10px; background: #fff; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+    th { background: linear-gradient(90deg, #ff4d4d, #ff944d); color: white; }
+    .total { text-align: right; font-weight: bold; color: #f96630; margin-top: 10px; }
+    .footer-x{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ddd;
+        width: 100%;
+        font-size: 20px;
+        height: 40px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #333;
+      }
+</style>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+<!-- Load Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+  rel="stylesheet"
+/>
+</head>
+<body style="min-height: 100vh; display:flex; flex-direction:column;">
+
+  <nav>
+    <div class="logo">
+        <a href="/">
+            <img src="{{ url_for('static', filename='image1.png') }}" alt="Logo">
+        </a>
+    </div>
+  
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+  
+    <ul id="menu">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('menu_page') }}">Menu</a></li>
+        <li><a href="{{ url_for('admin_menu') }}">Administrator</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact us</a></li>
+    
+    </ul>
+  </nav>
+    <h2>All Orders</h2>
+    <div style="flex:1;">
+      {% for order in orders %}
+      <div class="order-box">
+        <h3>Order #{{ order['order_id'] }} - {{ order['customer_name'] }}</h3>
+        <p>Phone: {{ order['phone'] }} | Address: {{ order['address'] }} | Total: ${{ order['total'] }}</p>
+        
+        <table>
+            <tr>
+                <th>Item Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Qty</th>
+            </tr>
+            {% for item in order['items'] %}
+            <tr>
+                <td>{{ item[0] }}</td>
+                <td>{{ item[1] }}</td>
+                <td>${{ item[2] }}</td>
+                <td>{{ item[3] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <!-- Delete button -->
+        <form action="{{ url_for('delete_order', order_id=order['order_id']) }}" method="POST" style="margin-top:10px;">
+            <button type="submit" style="padding:8px 12px; background-color:red; color:white; border:none; border-radius:5px; cursor:pointer;">
+                Delete Order
+            </button>
+        </form>
+        
+      </div>
+      {% endfor %}
+      
+    </div>
+    
+    <footer style="background-color: #000; color: #ccc; padding: 50px 20px; font-family: 'Poppins', sans-serif; width:100%;">
+        <div style="max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+      
+          <!-- Navigation Links -->
+          <div>
+            <h3 style="color: #f96630; margin-bottom: 15px;">Links</h3>
+            <a href="/" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none;">Home</a>
+            <a href="/Contact" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none;">Contact Us</a>
+            <a href="/Menu" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none;">Menu</a>
+            <a href="/Login" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none;">Login</a>
+            <a href="/SignUp" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none;">Sign Up</a>
+            <a href="/Administrator" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none;">Administrator</a>
+          </div>
+      
+          <!-- Contact Info -->
+          <div>
+            <h3 style="color: #f96630; margin-bottom: 15px;">Contact</h3>
+            <p style="margin-bottom:10px;">+92 300 1234567</p>
+            <p style="margin-bottom:10px;">iqra.khawar@forknknives.com</p>
+          </div>
+      
+          <!-- Social Media -->
+          <div>
+            <h3 style="color: #f96630; margin-bottom: 15px;">Follow Us</h3>
+            <a href="https://www.instagram.com/" target="_blank" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none;">Instagram</a>
+            <a href="https://www.facebook.com/" target="_blank" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none;">Facebook</a>
+          </div>
+      
+          <!-- Branding -->
+          <div>
+            <h3 style="color: #f96630; margin-bottom: 15px;">Fork N Knives</h3>
+            <p style="margin-bottom:5px;">Designed by Iqra Khawar</p>
+            <p>&copy; 2024 Fork N Knives. All rights reserved.</p>
+          </div>
+     
+        </div>
+    </footer>
+    
+    <div class="footer-x" style="background-color:#333; color:#ddd; text-align:center; padding:10px; font-size:16px;">
+      2025 Copyright: ForknKnives.com
+    </div>
+    
+    </body>
+    <script>
+      function toggleMenu(){
+        document.getElementById("menu").classList.toggle("show");
+      }
+    </script>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Page | Fork N Knives</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+/* ---------- RESET ---------- */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+body { background: #fff; color: #333; line-height: 1.6; overflow-x: hidden; }
+
+/* ---------- NAVBAR ---------- */
+nav {
+  width: 100%;
+  background: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+nav .logo img { height: 70px; transition: transform 0.3s; }
+nav .logo img:hover { transform: scale(1.1); }
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 35px;
+  align-items: center;
+}
+nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  font-family:'Trebuchet MS', Arial, sans-serif;
+  padding: 10px 18px;
+  border-radius: 8px;
+  transition: all 0.3s;
+  background:red;
+}
+nav ul li a:hover { background: black; color: #fff; transform: scale(1.1); }
+
+.hamburger {
+  display: none;
+  font-size: 32px;
+  cursor: pointer;
+  user-select: none;
+  color: #f96630;
+}
+
+/* ---------- HERO SECTION ---------- */
+.div-1-x {
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 25px;
+  animation: fadeIn 1.5s ease;
+}
+.div-1-x h1 {
+  font-size: 55px;
+  color: #f96630;
+  font-family:'Trebuchet MS', Arial, sans-serif;
+  overflow: hidden;
+  border-right: 4px solid #f96630;
+  white-space: nowrap;
+  animation: typing 3s steps(40) forwards, blink 0.7s step-end infinite;
+}
+.div-1-x p {
+  font-family:'Trebuchet MS', Arial, sans-serif;
+  font-size: 18px;
+  color: #333;
+  width: 60%;
+  margin: 0 auto;
+}
+#btn-order {
+  padding: 12px 25px;
+  background: #f96630;
+  color: white;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+#btn-order:hover { transform: scale(1.15); background: #e05520; }
+
+/* ---------- MENU SECTION ---------- */
+.Dishes {
+  padding: 60px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  
+}
+
+.menu-circle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  padding: 20px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, red, orange);  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.menu-circle:hover {
+  transform: scale(1.08);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.menu-circle img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  margin-bottom: 15px;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.menu-circle img:hover { transform: rotate(5deg) scale(1.05); }
+
+.menu-info { text-align: center; color: #fff; }
+.menu-info h3 { font-size: 20px; margin: 8px 0; }
+.menu-info p.category { font-size: 14px; opacity: 0.8; }
+.menu-info p.price { font-size: 18px; font-weight: bold; margin: 8px 0; }
+
+.menu-info .btn-add {
+  padding: 8px 12px;
+  background: #fff;
+  color: #ff6347;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 10px;
+}
+.menu-info .btn-add:hover { transform: scale(1.1); background: #ffe5e0; }
+
+/* ---------- MODAL ---------- */
+#orderModal {
+  display: none;
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fadeIn 0.5s ease;
+}
+#orderModal div { background:white; padding:30px; border-radius:20px; text-align:center; max-width:400px; width:90%; animation: popUp 0.4s ease; }
+
+/* ---------- FOOTER ---------- */
+footer {
+  background: #111;
+  color: #ccc;
+  padding: 50px 20px;
+}
+footer h3 { color: #f96630; margin-bottom:15px; }
+footer a { display:block; color:#ccc; margin-bottom:8px; text-decoration:none; transition:0.3s; }
+footer a:hover { color:#f96630; }
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes typing { from { width: 0 } to { width: 100% } }
+@keyframes blink { 50% { border-right-color: transparent; } }
+@keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
+@keyframes popUp { from { transform: scale(0.7); opacity:0 } to { transform: scale(1); opacity:1 } }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 992px) { .Dishes { gap: 20px; } }
+@media (max-width: 768px){
+  .hamburger { display: block; }
+  nav ul { 
+    display: none; 
+    flex-direction: column; 
+    position: absolute; 
+    top: 80px; left:0; width:100%; 
+    background:white; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+    gap:20px; 
+    padding: 20px 0;
+  }
+  nav ul.show { display: flex; }
+}
+@media (max-width: 576px){ .div-1-x h1 { font-size: 42px; } .div-1-x p { width: 90%; font-size:16px; } }
+.footer-x{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ddd;
+  width: 100%;
+  font-size: 20px;
+  height: 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #333;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+      <a href="/"><img src="{{ url_for('static', filename='image1.png') }}" alt="Logo"></a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+  <ul id="menu">
+    <li><a href="{{ url_for('home') }}">Home</a></li>
+    <li><a href="{{ url_for('menu_page') }}">Menu</a></li>
+    <li><a href="{{ url_for('admin_login') }}">Administrator</a></li>
+    <li><a href="{{ url_for('contact') }}">Contact us</a></li>
+  </ul>
+</nav>
+<div>
+<div class="div-1-x">
+  <h1>Our Menu Perfection!</h1>
+  <p>
+    Fork N Knives is a place where food becomes an experience—where every bite tells a story and every flavor is crafted with passion. It’s a restaurant built on warmth, comfort, and the joy of sharing meals that feel like home.
+  </p>
+  <a href="" id="btn-order">Get Order Now!</a>
+</div>
+
+<div class="Dishes">
+  {% for item in items %}
+  <div class="menu-circle"
+       data-id="{{ item[0] }}"
+       data-name="{{ item[1] }}"
+       data-category="{{ item[2] }}"
+       data-price="{{ item[3] }}"
+       data-image="{{ item[4] }}">
+    <img src="{{ url_for('static', filename='images/' ~ item[4]) }}" alt="{{ item[1] }}">
+    <div class="menu-info">
+        <h3>{{ item[1] }}</h3>
+        <p class="category">{{ item[2] }}</p>
+        <p class="price">${{ "%.2f"|format(item[3]) }}</p>
+        <button class="btn-add">Add</button>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Order Modal -->
+<div id="orderModal">
+  <div>
+    <h2>Added Successfully!</h2>
+    <p>Would you like to add more items to your order?</p>
+    <div style="margin-top:20px; display:flex; justify-content:center; gap:15px;">
+      <button id="addMoreBtn" style="padding:10px 20px; background:#f96630; color:white; border:none; border-radius:8px; cursor:pointer;">Yes</button>
+      <button id="checkoutBtn" style="padding:10px 20px; background:black; color:white; border:none; border-radius:8px; cursor:pointer;">No</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="max-width: 1200px; margin:auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:30px;">
+    <div>
+      <h3>Links</h3>
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/Contact"><i class="fas fa-phone"></i> Contact Us</a>
+      <a href="/Menu"><i class="fas fa-utensils"></i> Menu</a>
+      <a href="/Login"><i class="fas fa-key"></i> Login</a>
+      <a href="/SignUp"><i class="fas fa-user-plus"></i> Sign Up</a>
+      <a href="/Administrator"><i class="fas fa-cogs"></i> Administrator</a>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <p><i class="fas fa-phone"></i> +92 300 1234567</p>
+      <p><i class="fas fa-envelope"></i> iqra.khawar@forknknives.com</p>
+    </div>
+    <div>
+      <h3>Follow Us</h3>
+      <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+    </div>
+    <div>
+      <h3>Fork N Knives</h3>
+      <p>Designed by Iqra Khawar</p>
+      <p>&copy; 2024 Fork N Knives. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+</footer>
+<div class="footer-x">
+  <p>2025 Copyright: ForknKnives.com </p>
+ </div>
+</div>
+<script>
+// Hamburger menu toggle
+function toggleMenu() {
+  document.getElementById('menu').classList.toggle('show');
+}
+
+// Add to order
+document.querySelectorAll('.btn-add').forEach(btn => {
+    btn.addEventListener('click', e => {
+        e.preventDefault();
+        const menuItem = btn.closest('.menu-circle');
+        const formData = new FormData();
+        formData.append("id", menuItem.dataset.id);
+        formData.append("name", menuItem.dataset.name);
+        formData.append("category", menuItem.dataset.category);
+        formData.append("price", menuItem.dataset.price);
+        formData.append("image", menuItem.dataset.image);
+        fetch("/add_to_order", { method: "POST", body: formData })
+            .then(() => { document.getElementById('orderModal').style.display = 'flex'; });
+    });
+});
+document.getElementById('addMoreBtn').addEventListener('click', () => { document.getElementById('orderModal').style.display = 'none'; });
+document.getElementById('checkoutBtn').addEventListener('click', () => { window.location.href = "/order"; });
+</script>
+
+</body>
+</html>

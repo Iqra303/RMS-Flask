@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Page | Fork N Knives</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { font-family: 'Poppins', sans-serif; background: white; color: #000; }
+
+nav {
+  width: 100%;
+  background: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #ddd;
+  position: relative;
+}
+
+nav .logo img { height: 80px; }
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 40px;
+  align-items: center;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  padding: 10px 15px;
+  border-radius: 4px;
+  background-color: rgb(253, 43, 43);
+}
+
+nav ul li a:hover { background: black; color: white; transition: 0.3s; }
+
+.hamburger { display: none; font-size: 35px; cursor: pointer; user-select: none; }
+
+@media (max-width: 768px) {
+    nav ul {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px; /* lower a bit */
+      left: 0;
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      gap: 10px; /* smaller gap */
+      padding: 10px 0; /* less padding */
+      z-index: 999; /* ensure it’s above content */
+    }
+  
+    nav ul li a {
+      display: block;
+      padding: 10px 15px;
+      font-size: 16px; /* smaller font on mobile */
+      border-radius: 0; /* remove rounded edges for compact look */
+    }
+  
+    nav ul.show {
+      display: flex;
+    }
+  
+    .hamburger {
+      display: block;
+    }
+  }
+  
+
+/* Hero section */
+.div-1-x {
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 20px;
+}
+
+.div-1-x h1 {
+  color: black;
+  font-size: 48px;
+  border-right: 3px solid black;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 3s steps(30) forwards, blink .7s step-end infinite;
+}
+
+@keyframes typing { from { width: 0 } to { width: 100% } }
+@keyframes blink { 50% { border-right-color: transparent; } }
+
+.div-1-x p { font-size: 18px; max-width: 600px; margin: auto; }
+
+#btn-order {
+  padding: 12px 20px;
+  background-color: rgb(249, 102, 48);
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  transition: 0.3s;
+}
+#btn-order:hover { transform: scale(1.05); }
+
+/* Contact form */
+.contact-container {
+  width: 90%;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #fff3e0;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.contact-container h2 { text-align: center; color: #f96630; margin-bottom: 20px; }
+
+.contact-details { text-align: center; font-size: 18px; margin-bottom: 30px; }
+.contact-details p { margin: 8px 0; }
+
+.contact-container form label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; }
+.contact-container form input[type="text"],
+.contact-container form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 2px solid #f96630;
+  border-radius: 10px;
+  font-size: 16px;
+}
+.contact-container form textarea { height: 120px; }
+.contact-container form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #f96630;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.contact-container form button:hover { background-color: #e05520; transform: scale(1.05); }
+
+/* Footer */
+footer { background-color: #000; color: #ccc; padding: 50px 20px; width: 100%; }
+footer div { max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-between; }
+footer h3 { color: #f96630; margin-bottom: 15px; }
+footer a { display: block; color: #ccc; text-decoration: none; margin-bottom: 10px; transition: color 0.3s; }
+.footer-x { display: flex; justify-content: center; align-items: center; color: #ddd; width: 100%; font-size: 16px; background-color: #333; padding: 10px; }
+
+@media (max-width: 768px) {
+  .div-1-x h1 { font-size: 32px; }
+  .div-1-x p { font-size: 16px; }
+  footer div { flex-direction: column; align-items: center; gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <a href="/"><img src="{{ url_for('static', filename='image1.png') }}" alt="Logo"></a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+  <ul id="menu">
+    <li><a href="{{ url_for('home') }}">Home</a></li>
+    <li><a href="{{ url_for('menu_page') }}">Menu</a></li>
+    <li><a href="{{ url_for('admin_login') }}">Administrator</a></li>
+    <li><a href="{{ url_for('contact') }}">Contact us</a></li>
+  </ul>
+</nav>
+
+<div class="div-1-x">
+  <h1>Our Contact if any Query!</h1>
+  <p>
+    Fork N Knives is a place where food becomes an experience—where every bite tells a story and every flavor is crafted with passion. It’s a restaurant built on warmth, comfort, and the joy of sharing meals that feel like home.
+  </p>
+  <a href="#" id="btn-order">Get Order Now!</a>
+</div>
+
+<div class="contact-container">
+  <h2>Contact Us</h2>
+  <div class="contact-details">
+    <p><strong>Contact Person:</strong> Iqra Khawar</p>
+    <p><strong>Phone:</strong> +92 302 4460117</p>
+    <p><strong>Email:</strong> forknknives@gmail.com</p>
+  </div>
+
+  <form id="contact-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" placeholder="Your full name" required>
+
+    <label for="phone">Phone Number:</label>
+    <input type="text" id="phone" name="phone" placeholder="+92XXXXXXXXXX" required>
+
+    <label for="comments">Comments:</label>
+    <textarea id="comments" name="comments" placeholder="Your message..." required></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<footer>
+  <div>
+    <div>
+      <h3>Links</h3>
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/Contact"><i class="fas fa-phone"></i> Contact Us</a>
+      <a href="/Menu"><i class="fas fa-utensils"></i> Menu</a>
+      <a href="/Login"><i class="fas fa-key"></i> Login</a>
+      <a href="/SignUp"><i class="fas fa-user-plus"></i> Sign Up</a>
+      <a href="/Administrator"><i class="fas fa-cogs"></i> Administrator</a>
+    </div>
+
+    <div>
+      <h3>Contact</h3>
+      <p><i class="fas fa-phone"></i> +92 300 1234567</p>
+      <p><i class="fas fa-envelope"></i> iqra.khawar@forknknives.com</p>
+    </div>
+
+    <div>
+      <h3>Follow Us</h3>
+      <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+    </div>
+
+    <div>
+      <h3>Fork N Knives</h3>
+      <p>Designed by Iqra Khawar</p>
+      <p>&copy; 2024 Fork N Knives. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+<div class="footer-x">
+  <p>2025 Copyright: ForknKnives.com</p>
+</div>
+
+<script>
+function toggleMenu() {
+  document.getElementById("menu").classList.toggle("show");
+}
+
+document.getElementById('contact-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    alert(`Thank you, ${name}, for your comment!`);
+    this.reset();
+});
+</script>
+</body>
+</html>

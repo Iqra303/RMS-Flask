@@ -1,0 +1,378 @@
+<!-- Full CRUD Admin Menu Panel UI with Image Upload and Dialogs (Red-Orange-White-Black Theme) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Menu Panel</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            /* Red-Orange Gradient Background */
+            background: linear-gradient(135deg, white, orange);
+            color: #000;
+            height:100vh;
+        }
+        
+        nav {
+            width: 100%;
+            background: linear-gradient(135deg, white, orange);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ddd;
+          }
+          
+          .logo img { height: 80px; }
+          
+          ul { display: flex; list-style: none; gap: 40px; align-items: center; }
+          
+          ul li a {
+            text-decoration: none;
+            color: rgb(255, 255, 255);
+            font-size: 18px;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-family:'Trebuchet MS', Arial, sans-serif;
+            background-color: rgb(253, 43, 43);
+          }
+          
+          ul li a:hover {
+            background: black;
+            color: white;
+            transition: 0.3s;
+          }
+          
+          .hamburger {
+            display: none;
+            font-size: 35px;
+            cursor: pointer;
+            user-select: none;
+          }
+          
+          @media (max-width: 768px) {
+            nav ul {
+              display: none;
+              flex-direction: column;
+              position: absolute;
+              top: 60px; /* lower a bit */
+              left: 0;
+              width: 100%;
+              background: #fff;
+              box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+              gap: 10px; /* smaller gap */
+              padding: 10px 0; /* less padding */
+              z-index: 999; /* ensure it’s above content */
+            }
+          
+            nav ul li a {
+              display: block;
+              padding: 10px 15px;
+              font-size: 16px; /* smaller font on mobile */
+              border-radius: 0; /* remove rounded edges for compact look */
+            }
+          
+            nav ul.show {
+              display: flex;
+            }
+          
+            .hamburger {
+              display: block;
+            }
+          }
+          
+         
+        .header {
+            background: linear-gradient(90deg, red, orange);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        #id-btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            background:red;
+            color:white;
+        }
+        .btn-add { background: red; color: white; margin-bottom: 20px; }
+        .menu-table { width: 100%; border-collapse: collapse; margin-top: 20px; border:2px solid black;}
+        .menu-table th { background: black; color: white; padding: 12px; }
+        .menu-table td { padding: 12px; border-bottom: 1px solid #ddd; text-align: center; }
+        .btn-delete { background: orange; color: black; padding: 8px 16px; border-radius: 5px; margin-right: 5px; border:none;}
+        .btn-update { background: #222; color: white; padding: 8px 16px; border-radius: 5px; margin-right: 5px; border:none;}
+        img.menu-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+        .form-box { background: #f8f8f8; padding: 25px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 600px; margin: 40px auto; }
+        .form-box label { font-weight: bold; color: #333; display: block; margin-top: 10px; }
+        .form-box input, .form-box select { width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .submit-btn { background: red; color: white; padding: 12px 22px; border-radius: 8px; font-size: 17px; border: none; cursor: pointer; }
+        @media (max-width: 768px) {
+            .menu-table th, .menu-table td { padding: 8px; }
+            img.menu-img { width: 45px; height: 45px; }
+
+        }
+        .footer-x{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ddd;
+            width: 100%;
+            font-size: 20px;
+            height: 40px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #333;
+          }
+    </style>
+    <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+<!-- Load Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+  rel="stylesheet"
+/>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <a href="/">
+                <img src="{{ url_for('static', filename='image1.png') }}" alt="Logo">
+            </a>
+        </div>
+      
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+      
+        <ul id="menu">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('menu_page') }}">Menu</a></li>
+            <li><a href="{{ url_for('admin_login') }}">Administrator</a></li>
+                        <li><a href="{{ url_for('contact') }}">Contact us</a></li>
+        
+        </ul>
+      </nav>
+<div>
+    <div class="container">
+        <button class="btn btn-add" onclick="openForm('add')">+ Add Menu Item</button>
+        <button id="id-btn">View Orders</button>
+    
+        {% for category, items in categories.items() %}
+            <h2 style="color:#f96630; margin-top:40px;">{{ category }}</h2>
+            <table class="menu-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    {% if category == 'Pizza' %}
+                    <th>Size</th>
+                    {% endif %}
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item[0] }}</td>
+                    <td>{{ item[1] }}</td>
+                    {% if category == 'Pizza' %}
+                    <td>{{ item[5] }}</td>  <!-- Size column -->
+                    {% endif %}
+                    <td>{{ item[3] }}</td>
+                    <td><img src="/static/images/{{ item[4] }}" class="menu-img"></td>
+                    <td>
+                        <button class="btn-update" onclick="openForm('update', {{ item[0] }}, '{{ item[1] }}', '{{ item[2] }}', {{ item[3] }}, '{{ item[4] }}', '{{ item[5]|default('') }}')">Update</button>
+                        <button class="btn-delete" onclick="confirmDelete({{ item[0] }})">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endfor %}
+    </div>
+    
+    <!-- Add/Update Form Modal -->
+    <div id="formModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);">
+        <div class="form-box" style="position:relative; top:50%; transform:translateY(-50%);">
+            <span style="position:absolute; top:10px; right:15px; cursor:pointer; font-weight:bold;" onclick="closeForm()">&times;</span>
+            <h2 id="formTitle">Add Menu Item</h2>
+            <form id="menuForm" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="id" id="itemId">
+            
+                <label>Item Name</label>
+                <input type="text" name="name" id="itemName" required>
+            
+                <label>Category</label>
+                <select name="category" id="itemCategory" onchange="toggleSizeField()" required>
+                    <option value="">Select Category</option>
+                    <option value="Pizza">Pizza</option>
+                    <option value="Burgers">Burgers</option>
+                    <option value="Wraps">Wraps</option>
+                    <option value="Deals">Deals</option>
+                    <option value="Rolls">Rolls</option>
+                </select>
+            
+                <!-- Size dropdown (only for Pizza) -->
+                <div id="sizeField" style="display:none;">
+                    <label>Size</label>
+                    <select name="size" id="itemSize">
+                        <option value="Small">Small</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Large">Large</option>
+                        <option value="XL-Large">XL-Large</option>
+                    </select>
+                </div>
+            
+                <label>Price</label>
+                <input type="number" step="0.01" name="price" id="itemPrice" required>
+            
+                <label>Image</label>
+                <input type="file" name="image" id="itemImage" accept="image/*">
+            
+                <button type="submit" class="submit-btn" id="formButton">Add Item</button>
+            </form>
+            
+        </div>
+        
+    </div>
+    <footer style="background-color: #000; color: #ccc; padding: 50px 20px; font-family: 'Poppins', sans-serif;">
+        <div style="max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+      
+          <!-- Navigation Links -->
+          <div>
+            <h3 style="color: #f96630; margin-bottom: 15px;">Links</h3>
+            <a href="/" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none; transition:color 0.3s;">
+              <i class="fas fa-home"></i> Home
+            </a>
+            <a href="/Contact" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none; transition:color 0.3s;">
+              <i class="fas fa-phone"></i> Contact Us
+            </a>
+            <a href="/Menu" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none; transition:color 0.3s;">
+              <i class="fas fa-utensils"></i> Menu
+            </a>
+            <a href="/Login" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none; transition:color 0.3s;">
+              <i class="fas fa-key"></i> Login
+            </a>
+            <a href="/SignUp" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none; transition:color 0.3s;">
+              <i class="fas fa-user-plus"></i> Sign Up
+            </a>
+            <a href="/Administrator" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none; transition:color 0.3s;">
+              <i class="fas fa-cogs"></i> Administrator
+            </a>
+          </div>
+      
+          <!-- Contact Info -->
+          <div>
+            <h3 style="color: #f96630; margin-bottom: 15px;">Contact</h3>
+            <p style="margin-bottom:10px;">
+              <i class="fas fa-phone"></i> +92 300 1234567
+            </p>
+            <p style="margin-bottom:10px;">
+              <i class="fas fa-envelope"></i> iqra.khawar@forknknives.com
+            </p>
+          </div>
+      
+          <!-- Social Media -->
+          <div>
+            <h3 style="color: #f96630; margin-bottom: 15px;">Follow Us</h3>
+            <a href="https://www.instagram.com/" target="_blank" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none; transition:color 0.3s;">
+              <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="https://www.facebook.com/" target="_blank" style="display:block; margin-bottom:10px; color:#ccc; text-decoration:none; transition:color 0.3s;">
+              <i class="fab fa-facebook-f"></i> Facebook
+            </a>
+          </div>
+      
+          <!-- Branding -->
+          <div>
+            <h3 style="color: #f96630; margin-bottom: 15px;">Fork N Knives</h3>
+            <p style="margin-bottom:5px;">Designed by Iqra Khawar</p>
+            <p>&copy; 2024 Fork N Knives. All rights reserved.</p>
+          </div>
+     
+        </div>
+        
+      </footer>
+      <div class="footer-x">
+        <p>2025 Copyright: ForknKnives.com </p>
+       </div>
+</div>
+    <script>
+        function openForm(mode, id='', name='', category='', price='', image='') {
+            document.getElementById('formModal').style.display = 'block';
+            document.getElementById('itemId').value = id;
+            document.getElementById('itemName').value = name;
+            document.getElementById('itemCategory').value = category;
+            document.getElementById('itemPrice').value = price;
+            document.getElementById('itemImage').required = mode === 'add';
+            document.getElementById('formTitle').innerText = mode === 'add' ? 'Add Menu Item' : 'Update Menu Item';
+            document.getElementById('formButton').innerText = mode === 'add' ? 'Add Item' : 'Update Item';
+            document.getElementById('menuForm').action = mode === 'add' ? '/admin/menu/add' : '/admin/menu/update/' + id;
+        }
+        function closeForm() { document.getElementById('formModal').style.display = 'none'; }
+        function confirmDelete(id) {
+            if(confirm('Are you sure you want to delete this item?')) {
+                window.location.href = '/admin/menu/delete/' + id;
+            }
+        }
+        document.getElementById("id-btn").addEventListener("click", function () {
+            window.location.href = "/admin/orders";
+        });
+
+        function toggleSizeField() {
+            const category = document.getElementById('itemCategory').value;
+            const sizeDiv = document.getElementById('sizeField');
+        
+            if(category === 'Pizza') {
+                sizeDiv.style.display = 'block';
+            } else {
+                sizeDiv.style.display = 'none';
+                document.getElementById('itemSize').value = ''; // reset size
+            }
+        }
+        
+        // Call toggleSizeField when opening form for update
+        function openForm(mode, id='', name='', category='', price='', image='', size='') {
+            document.getElementById('formModal').style.display = 'block';
+            document.getElementById('itemId').value = id;
+            document.getElementById('itemName').value = name;
+            document.getElementById('itemCategory').value = category;
+            document.getElementById('itemPrice').value = price;
+            document.getElementById('itemImage').required = mode === 'add';
+            document.getElementById('formTitle').innerText = mode === 'add' ? 'Add Menu Item' : 'Update Menu Item';
+            document.getElementById('formButton').innerText = mode === 'add' ? 'Add Item' : 'Update Item';
+            document.getElementById('menuForm').action = mode === 'add' ? '/admin/menu/add' : '/admin/menu/update/' + id;
+        
+            // Handle size
+            toggleSizeField();
+            if(size) document.getElementById('itemSize').value = size;
+        }
+        function toggleMenu(){
+            document.getElementById("menu").classList.toggle("show");
+          }
+        
+    </script>
+
+</body>
+</html>
