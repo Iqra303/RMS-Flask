@@ -210,6 +210,48 @@ footer a:hover { color:#f96630; }
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #333;
 }
+.load-more-btn{
+  display:flex;
+  justify-content:center;
+  background:red;
+  color:white;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  margin:10px;
+}
+.hidden-item {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+
+.show-item {
+  display: flex !important;
+  opacity: 1 !important;
+  transform: translateY(0);
+}
+
+.load-more-btn {
+  background: #f96630;
+  color: white;
+  padding: 12px 25px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 30px auto;
+  display: block;
+  transition: 0.3s;
+}
+
+.load-more-btn:hover {
+  background: #d9531d;
+  transform: scale(1.05);
+}
+
 </style>
 </head>
 <body>
@@ -251,8 +293,12 @@ footer a:hover { color:#f96630; }
         <button class="btn-add">Add</button>
     </div>
   </div>
+
   {% endfor %}
 </div>
+
+<button id="loadMoreBtn" class="load-more-btn">Load More</button>
+
 
 <!-- Order Modal -->
 <div id="orderModal">
@@ -322,6 +368,36 @@ document.querySelectorAll('.btn-add').forEach(btn => {
 });
 document.getElementById('addMoreBtn').addEventListener('click', () => { document.getElementById('orderModal').style.display = 'none'; });
 document.getElementById('checkoutBtn').addEventListener('click', () => { window.location.href = "/order"; });
+
+// LOAD MORE EFFECT
+const items = document.querySelectorAll(".menu-circle");
+let visibleCount = 5;  // pehle 6 items dikhein
+
+// Initially sab se upar ke 6 show
+items.forEach((item, index) => {
+  if (index >= visibleCount) {
+    item.classList.add("hidden-item");
+  }
+});
+
+document.getElementById("loadMoreBtn").addEventListener("click", () => {
+  let nextItems = 4; // ek baar me 4 aur open karna
+
+  for (let i = visibleCount; i < visibleCount + nextItems; i++) {
+    if (items[i]) {
+      items[i].classList.remove("hidden-item");
+      items[i].classList.add("show-item");
+    }
+  }
+
+  visibleCount += nextItems;
+
+  // Jab sab items show ho jayen → button hide
+  if (visibleCount >= items.length) {
+    document.getElementById("loadMoreBtn").style.display = "none";
+  }
+});
+
 </script>
 
 </body>
