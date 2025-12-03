@@ -607,15 +607,17 @@ def admin_login():
         email = request.form["email"]
         password = request.form["password"]
 
-        # FIXED ADMIN CREDENTIALS
+        # Fixed Admin Credentials
         if email == "admin@gmail.com" and password == "admin123":
             session["admin"] = True
-            return redirect(url_for("admin_menu"))   # ← FIXED (added return)
+            flash("Admin Login Successful!", "success")
+            return redirect(url_for("admin_menu"))
         else:
             flash("Invalid email or password!", "error")
-            return redirect("/admin-login")
+            return redirect(url_for("admin_login"))
 
     return render_template("admin_login.html")
+
 
 
 @app.route("/admin/order/delete/<int:order_id>", methods=["POST"])
