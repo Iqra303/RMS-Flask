@@ -44,23 +44,37 @@ ul li a:hover {
   user-select: none;
 }
 
-@media (max-width: 768px){
-  ul {
-    position: absolute;
-    top: 100px;
-    left: 0;
-    width: 100%;
-    background: white;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 20px 0;
-    display: none;
-    border-bottom: 2px solid #ddd;
+@media (max-width: 768px) {
+    nav ul {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px; /* lower a bit */
+      left: 0;
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      gap: 10px; /* smaller gap */
+      padding: 10px 0; /* less padding */
+      z-index: 999; /* ensure it’s above content */
+    }
+  
+    nav ul li a {
+      display: block;
+      padding: 10px 15px;
+      font-size: 16px; /* smaller font on mobile */
+      border-radius: 0; /* remove rounded edges for compact look */
+    }
+  
+    nav ul.show {
+      display: flex;
+    }
+  
+    .hamburger {
+      display: block;
+    }
   }
-  ul.show { display: flex; }
-  .hamburger { display: block; }
-}
+  
 
 .div-1-x {
   padding: 60px;
@@ -266,7 +280,7 @@ h1 {
     align-items: center;
     color: #ddd;
     width: 100%;
-    font-size: 20px;
+    font-size: 14px;
     height: 40px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #333;

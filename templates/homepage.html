@@ -44,22 +44,35 @@ ul li a:hover {
   user-select: none;
 }
 
-@media (max-width: 768px){
-  ul {
+@media (max-width: 768px) {
+  nav ul {
+    display: none;
+    flex-direction: column;
     position: absolute;
-    top: 100px;
+    top: 60px; /* lower a bit */
     left: 0;
     width: 100%;
-    background: white;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 20px 0;
-    display: none;
-    border-bottom: 2px solid #ddd;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    gap: 10px; /* smaller gap */
+    padding: 10px 0; /* less padding */
+    z-index: 999; /* ensure it’s above content */
   }
-  ul.show { display: flex; }
-  .hamburger { display: block; }
+
+  nav ul li a {
+    display: block;
+    padding: 10px 15px;
+    font-size: 16px; /* smaller font on mobile */
+    border-radius: 0; /* remove rounded edges for compact look */
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
 }
 
 .div-1-x {
@@ -266,7 +279,7 @@ h1 {
     align-items: center;
     color: #ddd;
     width: 100%;
-    font-size: 20px;
+    font-size: 14px;
     height: 40px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #333;
@@ -334,7 +347,7 @@ h1 {
 .sub-box {
   flex: 1 1 250px; /* responsive width */
   max-width: 400px;
-  height:200px;
+  height:295px;
   background: #f8f8f8;
   text-align: center;
   padding: 25px 15px;
@@ -452,9 +465,71 @@ h1 {
     font-size: 0.9rem;
   }
 }
+@media (max-width: 379px) {
+
+  .div-1-x {
+      max-width: 100%;
+      padding: 10px 15px;
+      text-align: center;
+  }
+
+  .div-1-x h1 {
+      font-size: 26px;
+      line-height: 1.3;
+
+      /* MOBILE FIX — typing animation without overflow */
+      white-space: normal !important;
+      overflow: visible !important;
+      border-right: none; /* optional */
+  }
+
+  #first-para-x {
+      font-size: 14px;
+      line-height: 1.4;
+      margin-top: 10px;
+  }
+
+  #btn-order {
+      padding: 10px 20px;
+      font-size: 15px;
+      margin-top: 15px;
+      display: inline-block;
+  }
+}
 
 @media (max-width: 576px){ .div-1-x h1 { font-size: 20px; } .div-1-x p { width: 90%; font-size:16px; } }
-@media (max-width: 576px){ .Dishes h1 { font-size: 20px; } .Dishes p { width: 90%; font-size:10px; } }
+@media (max-width: 576px){ .Dishes h1 { font-size: 20px; } .Dishes p { width: 80%; font-size:10px; } }
+
+@media (max-width: 379px) {
+
+  .Dishes {
+    padding: 18px;
+  }
+
+  .Dishes h1 {
+    font-size: 15px;
+    line-height: 1.3;
+  }
+
+  #first-para-y {
+    width: 100%;
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 10px;
+  }
+
+  .list{
+    gap: 8px;
+  }
+
+  #btn-order-2{
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 20px;
+    text-align: center;
+  }
+}
 </style>
 <link
   rel="stylesheet"

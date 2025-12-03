@@ -616,7 +616,7 @@ def admin_login():
             flash("Invalid email or password!", "error")
             return redirect(url_for("admin_login"))
 
-    return render_template("admin_login.html")
+    return render_template("Admin_login.html")
 
 
 

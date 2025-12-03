@@ -146,6 +146,106 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #333;
           }
+
+          /* ----------- Responsive at 379px ----------- */
+@media (max-width: 380px) {
+
+    nav {
+      padding: 8px 12px;
+    }
+  
+    .logo img {
+      height: 55px;
+    }
+  
+    .hamburger {
+      font-size: 30px;
+    }
+  
+    nav ul {
+      top: 55px;
+    }
+  
+    nav ul li a {
+      font-size: 14px;
+      padding: 8px 10px;
+    }
+  
+    .container {
+      padding: 10px;
+    }
+  
+    .btn-add, #id-btn {
+      width: 100%;
+      font-size: 15px;
+      padding: 10px;
+    }
+  
+    h2 {
+      font-size: 18px;
+      text-align: center;
+    }
+  
+    .menu-table {
+      font-size: 12px;
+    }
+  
+    .menu-table th,
+    .menu-table td {
+      padding: 6px;
+    }
+  
+    img.menu-img {
+      width: 35px;
+      height: 35px;
+    }
+  
+    /* Update/Delete buttons */
+    .btn-update,
+    .btn-delete {
+      width: 80px;
+      padding: 6px;
+      font-size: 11px;
+    }
+  
+    /* Form modal box */
+    .form-box {
+      width: 90%;
+      padding: 15px;
+    }
+  
+    .form-box input,
+    .form-box select {
+      padding: 8px;
+      font-size: 14px;
+    }
+  
+    .submit-btn {
+      width: 100%;
+      padding: 10px;
+      font-size: 15px;
+    }
+  
+    /* Footer */
+    footer {
+      padding: 30px 10px !important;
+    }
+  
+    footer h3 {
+      font-size: 16px;
+    }
+  
+    footer a, footer p {
+      font-size: 13px !important;
+    }
+  
+    .footer-x {
+      font-size: 13px;
+      height: 35px;
+    }
+  
+  }
+  
     </style>
     <link
   rel="stylesheet"
@@ -205,6 +305,8 @@
                     <td><img src="/static/images/{{ item[4] }}" class="menu-img"></td>
                     <td>
                         <button class="btn-update" onclick="openForm('update', {{ item[0] }}, '{{ item[1] }}', '{{ item[2] }}', {{ item[3] }}, '{{ item[4] }}', '{{ item[5]|default('') }}')">Update</button>
+                        <br>
+                        <br>
                         <button class="btn-delete" onclick="confirmDelete({{ item[0] }})">Delete</button>
                     </td>
                 </tr>
