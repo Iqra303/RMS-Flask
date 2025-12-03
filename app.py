@@ -1006,7 +1006,7 @@ def admin_login():
             return redirect(url_for("admin_menu"))
         flash("Invalid email or password!", "error")
         return redirect(url_for("admin_login"))
-    return render_template("admin_login.html")
+    return render_template("Admin_login.html")
 
 @app.route("/admin/order/delete/<int:order_id>", methods=["POST"])
 def delete_order(order_id):
